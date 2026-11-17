@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>TESR Program — รวมโปรแกรมทีม TESR</title>
+<meta name="description" content="หน้ารวมโปรแกรมภายในของทีม TESR — เลือกแอปที่ต้องการใช้งานได้จากที่เดียว">
+<meta name="theme-color" content="#0b0b0d">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TESR Program">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0b0b0d;
+  --crimson:#8B0000;
+  --red:#b3121f;
+  --gold:#C9A84C;
+  --gold-hi:#e8cf86;
+  --text:#f4f1ea;
+  --muted:rgba(244,241,234,.66);
+  --glass:rgba(22,14,14,.42);
+  --glass-line:rgba(255,255,255,.16);
+  --icon:clamp(64px,19vw,84px);
+}
+@media (min-width:760px){ :root{ --icon:92px; } }
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:"IBM Plex Sans Thai",system-ui,sans-serif;
+  color:var(--text);
+  background:var(--black);
+  min-height:100dvh;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* ---------- Desktop wallpaper ---------- */
+.wall{
+  position:fixed;inset:0;z-index:0;
+  background:url(bg.jpg) center/cover no-repeat,#120607;
+  transform:scale(1.02);
+  filter:blur(var(--wall-blur,0px)) saturate(1.05);
+  transition:filter .6s ease;
+}
+.veil{
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(60% 30% at 50% 24%,rgba(0,0,0,.55),rgba(0,0,0,0) 100%),
+    radial-gradient(120% 80% at 50% 45%,rgba(0,0,0,.22),rgba(0,0,0,.62) 75%),
+    linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,0) 22%,rgba(0,0,0,0) 70%,rgba(0,0,0,.7));
+}
+body.open .wall{--wall-blur:0px}
+@media (max-width:759px){ body.open .wall{--wall-blur:6px} }
+
+/* ---------- Top bar ---------- */
+.top{
+  position:relative;z-index:3;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:calc(env(safe-area-inset-top) + 14px) clamp(16px,4vw,40px) 0;
+}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.brand img{width:34px;height:auto;filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
+.brand b{font-family:"Chakra Petch",sans-serif;font-weight:700;letter-spacing:.06em;font-size:15px}
+.brand small{display:block;font-size:10.5px;color:var(--gold);letter-spacing:.08em;font-family:"Chakra Petch",sans-serif;font-weight:500}
+@media (max-width:480px){ .brand small{display:none} .brand b{font-size:17px} }
+.clock{text-align:right;font-family:"Chakra Petch",sans-serif;line-height:1.1}
+.clock .t{font-size:22px;font-weight:600;letter-spacing:.04em}
+.clock .d{white-space:nowrap;font-size:11.5px;color:var(--muted);font-family:"IBM Plex Sans Thai",sans-serif}
+
+/* ---------- Stage ---------- */
+main{
+  position:relative;z-index:2;
+  min-height:calc(100dvh - 70px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:28px 16px 40px;
+}
+h1{
+  font-family:"Chakra Petch",sans-serif;font-weight:700;
+  font-size:clamp(34px,9vw,56px);letter-spacing:.01em;line-height:1;
+  text-shadow:0 2px 4px rgba(0,0,0,.6),0 4px 28px rgba(0,0,0,.8);
+  align-self:center;width:min(100%,640px);
+  padding-left:clamp(8px,4vw,28px);
+  opacity:0;transform:translateY(8px);
+  transition:opacity .5s ease .1s,transform .5s ease .1s;
+}
+h1 span{color:var(--gold)}
+.sub{
+  width:min(100%,640px);padding-left:clamp(8px,4vw,28px);
+  margin-top:8px;font-size:14px;color:var(--muted);text-shadow:0 1px 8px rgba(0,0,0,.9);
+  opacity:0;transition:opacity .5s ease .2s;
+}
+body.open h1{opacity:1;transform:none}
+body.open .sub{opacity:1}
+
+/* ---------- Folder (glass) ---------- */
+.folder{
+  margin-top:22px;
+  width:min(100%,640px);
+  border-radius:clamp(34px,9vw,48px);
+  padding:clamp(22px,6vw,38px) clamp(10px,3vw,30px) clamp(26px,6vw,40px);
+  background:var(--glass);
+  -webkit-backdrop-filter:blur(26px) saturate(1.4);
+  backdrop-filter:blur(26px) saturate(1.4);
+  border:1px solid var(--glass-line);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.22),
+    inset 0 -1px 0 rgba(0,0,0,.25),
+    0 30px 80px rgba(0,0,0,.55);
+  position:relative;
+  transform:scale(.86);opacity:0;
+  transition:transform .55s cubic-bezier(.2,.9,.25,1.15),opacity .35s ease;
+}
+.folder::before{ /* gold hairline on top edge, TESR accent */
+  content:"";position:absolute;left:18%;right:18%;top:-1px;height:2px;border-radius:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.85;
+}
+body.open .folder{transform:none;opacity:1}
+
+.search{
+  display:flex;align-items:center;gap:8px;
+  margin:0 auto 22px;width:min(100%,420px);
+  background:rgba(0,0,0,.32);border:1px solid rgba(255,255,255,.12);
+  border-radius:14px;padding:9px 12px;
+}
+.search svg{flex:none;opacity:.7}
+.search input{
+  flex:1;min-width:0;background:none;border:0;outline:0;color:var(--text);
+  font:inherit;font-size:15px;
+}
+.search input::placeholder{color:rgba(244,241,234,.45)}
+.search kbd{
+  font-family:"Chakra Petch",sans-serif;font-size:11px;color:var(--muted);
+  border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:1px 6px;
+}
+@media (hover:none){.search kbd{display:none}}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  row-gap:clamp(18px,5vw,30px);column-gap:6px;
+  list-style:none;
+}
+@media (min-width:760px){ .grid{grid-template-columns:repeat(4,1fr)} }
+
+.app{
+  display:flex;flex-direction:column;align-items:center;gap:9px;
+  text-decoration:none;color:var(--text);
+  border-radius:20px;padding:6px 2px;outline:none;
+  opacity:0;transform:translateY(10px) scale(.9);
+  transition:opacity .4s ease,transform .45s cubic-bezier(.2,.9,.25,1.2);
+  transition-delay:calc(.12s + var(--i) * .035s);
+}
+body.open .app{opacity:1;transform:none}
+.app .ic{
+  width:var(--icon);height:var(--icon);
+  border-radius:23%;overflow:hidden;position:relative;
+  box-shadow:0 8px 20px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.06);
+  transition:transform .18s ease,box-shadow .25s ease;
+  background:#140c0c;
+}
+.app .ic img{width:100%;height:100%;object-fit:cover;display:block}
+.app .ic::after{ /* glossy top */
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,0) 45%);
+}
+.app .nm{
+  font-size:clamp(12.5px,3.4vw,14px);font-weight:500;line-height:1.25;
+  text-align:center;max-width:100%;padding:0 2px;
+  text-shadow:0 1px 6px rgba(0,0,0,.7);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.app .ds{
+  display:none;font-size:11.5px;color:var(--muted);text-align:center;line-height:1.35;
+  max-width:170px;margin-top:-4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+@media (min-width:760px){ .app .ds{display:block} }
+.app:hover .ic,.app:focus-visible .ic{
+  transform:translateY(-3px) scale(1.05);
+  box-shadow:0 14px 28px rgba(0,0,0,.55),0 0 0 2px var(--gold);
+}
+.app:active .ic{transform:scale(.92)}
+.app.hide{display:none}
+
+.empty{display:none;text-align:center;color:var(--muted);font-size:14px;padding:18px 0 6px}
+.empty.show{display:block}
+
+/* ---------- Footer ---------- */
+footer{
+  position:relative;z-index:2;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:0 16px calc(env(safe-area-inset-bottom) + 18px);
+  font-family:"Chakra Petch",sans-serif;font-size:12px;letter-spacing:.06em;color:var(--muted);
+}
+footer img{width:18px;height:auto}
+footer b{color:var(--gold);font-weight:600}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important}
+}
+</style>
+</head>
+<body>
+<div class="wall" aria-hidden="true"></div>
+<div class="veil" aria-hidden="true"></div>
+
+<header class="top">
+  <a class="brand" href="https://www.tesrshop.com" target="_blank" rel="noopener">
+    <img src="logo.png" alt="TESR">
+    <span><b>TESR</b><small>THAI EMBEDDED SYSTEM AND ROBOTICS</small></span>
+  </a>
+  <div class="clock" aria-live="off">
+    <div class="t" id="t">--:--</div>
+    <div class="d" id="d"></div>
+  </div>
+</header>
+
+<main>
+  <h1>TESR <span>Program</span></h1>
+  <p class="sub" id="greet">เลือกโปรแกรมที่ต้องการใช้งาน</p>
+
+  <section class="folder" aria-label="โปรแกรมทั้งหมดของ TESR">
+    <label class="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="ค้นหาโปรแกรม…" autocomplete="off" aria-label="ค้นหาโปรแกรม">
+      <kbd>/</kbd>
+    </label>
+    <ul class="grid" id="grid"></ul>
+    <p class="empty" id="empty">ไม่พบโปรแกรมที่ค้นหา</p>
+  </section>
+</main>
+
+<footer>
+  <img src="logo.png" alt="">
+  <span>Made by <b>TESR</b> · TESR Academy</span>
+</footer>
+
+<script>
+/* ==========================================================
+   รายการโปรแกรม — เพิ่ม/แก้ได้ที่นี่ที่เดียว
+   name : ชื่อที่แสดงใต้ไอคอน
+   desc : คำอธิบายสั้น (โชว์บนจอคอม และใช้ค้นหา)
+   url  : ลิงก์ของโปรแกรม
+   icon : ไฟล์ไอคอนในโฟลเดอร์ icons/
+   tags : คำค้นเพิ่มเติม (ไทย/อังกฤษ)
+   ========================================================== */
+const APPS = [
+  { name:"TESR Time Clock", desc:"ลงเวลาเข้า–ออกงาน & ใบลา", url:"https://tesr-channel.github.io/Work-Tracking/", icon:"icons/timeclock.svg", tags:"ลงเวลา เข้างาน ออกงาน ลา timeclock" },
+  { name:"TESR Chat", desc:"รวมแชตลูกค้าทุกช่องทาง", url:"https://tesr-channel.github.io/TESR-Chat/", icon:"icons/chat.svg", tags:"แชต แชท ลูกค้า line facebook" },
+  { name:"TESR Ledger", desc:"บันทึกรายจ่าย", url:"https://tesr-channel.github.io/TESR-LEDGER/", icon:"icons/ledger.png", tags:"รายจ่าย บัญชี ใบเสร็จ เบิก" },
+  { name:"TESR PDF", desc:"แก้ไข PDF ครบจบในเครื่อง", url:"https://tesr-channel.github.io/pdf_tool/", icon:"icons/pdf.png", tags:"pdf เอกสาร รวมไฟล์ แก้ไข" },
+  { name:"TESR Handover", desc:"ติดตามพัสดุ & บันทึกส่งมอบ", url:"https://tesr-channel.github.io/logistics_tracking_handover/", icon:"icons/handover.png", tags:"ส่งของ พัสดุ ขนส่ง logistics tracking" },
+  { name:"TESR Forge", desc:"แต่งรูป ตัดพื้นหลัง พรีเซนต์", url:"https://tesr-channel.github.io/TESR_Forge/", icon:"icons/forge.png", tags:"รูป ภาพ ตัดพื้นหลัง qr พรีเซนต์ canva" },
+  { name:"TESR Board", desc:"ติดตามงานและวัดผลทีม", url:"https://track.tesrshop.com/", icon:"icons/board.png", tags:"งาน บอร์ด ติดตามงาน kpi" },
+  { name:"TESR·สถานะคำสั่งซื้อ", desc:"เช็กสถานะคำสั่งซื้อ", url:"https://track.tesrshop.com/track.html", icon:"icons/board.png", tags:"ออเดอร์ order สถานะ คำสั่งซื้อ" },
+];
+
+const grid = document.getElementById('grid');
+const q = document.getElementById('q');
+const empty = document.getElementById('empty');
+
+grid.innerHTML = APPS.map((a,i)=>`
+  <li>
+    <a class="app" style="--i:${i}" href="${a.url}" target="_blank" rel="noopener"
+       title="${a.name} — ${a.desc}" data-k="${(a.name+' '+a.desc+' '+(a.tags||'')).toLowerCase()}">
+      <span class="ic"><img src="${a.icon}" alt="" loading="eager" decoding="async"></span>
+      <span class="nm">${a.name}</span>
+      <span class="ds">${a.desc}</span>
+    </a>
+  </li>`).join('');
+
+const items = [...grid.querySelectorAll('.app')];
+function filter(){
+  const s = q.value.trim().toLowerCase();
+  let n = 0;
+  items.forEach(el=>{
+    const hit = !s || el.dataset.k.includes(s);
+    el.classList.toggle('hide', !hit);
+    el.parentElement.style.display = hit ? '' : 'none';
+    if(hit) n++;
+  });
+  empty.classList.toggle('show', n === 0);
+}
+q.addEventListener('input', filter);
+q.addEventListener('keydown', e=>{
+  if(e.key === 'Enter'){
+    const first = items.find(el=>!el.classList.contains('hide'));
+    if(first) window.open(first.href, '_blank', 'noopener');
+  }
+  if(e.key === 'Escape'){ q.value=''; filter(); q.blur(); }
+});
+document.addEventListener('keydown', e=>{
+  if(e.key === '/' && document.activeElement !== q){ e.preventDefault(); q.focus(); }
+});
+
+/* นาฬิกา + คำทักทาย (เวลาไทย) */
+const tEl = document.getElementById('t'), dEl = document.getElementById('d'), gEl = document.getElementById('greet');
+function tick(){
+  const now = new Date();
+  tEl.textContent = now.toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Bangkok'});
+  const small = innerWidth < 480;
+  dEl.textContent = now.toLocaleDateString('th-TH-u-ca-gregory',{weekday:small?'short':'long',day:'numeric',month:small?'short':'long',year:'numeric',timeZone:'Asia/Bangkok'});
+  const h = +now.toLocaleString('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Bangkok'});
+  const hi = h<12 ? 'สวัสดีตอนเช้า' : h<17 ? 'สวัสดีตอนบ่าย' : 'สวัสดีตอนเย็น';
+  gEl.textContent = hi + ' — เลือกโปรแกรมที่ต้องการใช้งาน';
+}
+tick(); setInterval(tick, 15000);
+
+/* เปิดโฟลเดอร์แบบ iOS */
+requestAnimationFrame(()=>requestAnimationFrame(()=>document.body.classList.add('open')));
+</script>
+</body>
+</html>

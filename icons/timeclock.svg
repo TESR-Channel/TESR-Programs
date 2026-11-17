@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- TESR Time Clock: ไอคอนตอนเพิ่มไปยังหน้าจอโฮม — นาฬิกา (ลงเวลา) + เครื่องหมายถูก (เช็คอินแล้ว) -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#241b18"/>
+      <stop offset="1" stop-color="#0d0b0a"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e8cf86"/>
+      <stop offset="1" stop-color="#b8923a"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#bg)"/>
+  <!-- หน้าปัดนาฬิกา -->
+  <circle cx="236" cy="244" r="150" fill="#1a1412" stroke="url(#gold)" stroke-width="30"/>
+  <g stroke="#e8cf86" stroke-width="14" stroke-linecap="round">
+    <line x1="236" y1="122" x2="236" y2="146"/>
+    <line x1="358" y1="244" x2="334" y2="244"/>
+    <line x1="236" y1="366" x2="236" y2="342"/>
+    <line x1="114" y1="244" x2="138" y2="244"/>
+  </g>
+  <!-- เข็ม 09:00 -->
+  <g stroke="#e8cf86" stroke-linecap="round">
+    <line x1="236" y1="244" x2="236" y2="158" stroke-width="20"/>
+    <line x1="236" y1="244" x2="166" y2="244" stroke-width="24"/>
+  </g>
+  <circle cx="236" cy="244" r="17" fill="#e8cf86"/>
+  <!-- ป้ายเช็คอินแล้ว -->
+  <circle cx="366" cy="370" r="86" fill="#b3121a" stroke="#0d0b0a" stroke-width="16"/>
+  <path d="M325 371 l28 28 l55 -58" fill="none" stroke="#ffffff" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
