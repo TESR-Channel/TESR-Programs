@@ -1,4 +1,4 @@
-# TESR Program — programs.tesrshop.com
+# TESR Shop Program — programs.tesrshop.com
 
 หน้ารวมโปรแกรมภายในของทีม TESR · Made by TESR
 
