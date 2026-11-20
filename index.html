@@ -201,6 +201,8 @@ footer{
 }
 footer img{width:18px;height:auto}
 footer b{color:var(--gold);font-weight:600}
+footer a{color:var(--text);text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:3px;padding:12px 2px}
+footer a:hover,footer a:focus-visible{color:var(--gold);outline:none}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition:none!important}
@@ -239,7 +241,7 @@ footer b{color:var(--gold);font-weight:600}
 
 <footer>
   <img src="logo.png" alt="">
-  <span>Made by <b>TESR</b> · TESR Shop</span>
+  <span>Made by <b>TESR</b> · <a href="https://www.tesrshop.com" target="_blank" rel="noopener">TESR Shop</a></span>
 </footer>
 
 <script>
